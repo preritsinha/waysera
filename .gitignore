@@ -23,3 +23,7 @@ env/
 node_modules/
 
 .claude
+
+# Blog drafts and screenshots — written for Medium, not part of the app
+BLOG_DRAFT.md
+blog-screenshots/

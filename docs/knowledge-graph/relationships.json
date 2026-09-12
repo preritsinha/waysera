@@ -1,0 +1,1923 @@
+{
+  "nodes": [
+    {
+      "id": "service:relay",
+      "label": "WS /v1/relay/{channel_id}",
+      "kind": "service",
+      "summary": "Opaque text-frame relay. It sees sealed envelopes and plaintext handshake envelopes."
+    },
+    {
+      "id": "service:health",
+      "label": "GET /v1/health",
+      "kind": "service",
+      "summary": "Relay liveness endpoint."
+    },
+    {
+      "id": "service:root",
+      "label": "GET /",
+      "kind": "service",
+      "summary": "Compatibility health endpoint in addition to documented v1 API."
+    },
+    {
+      "id": "service:photon",
+      "label": "Photon destination search",
+      "kind": "service",
+      "summary": "Query and optional latitude/longitude/bounding box leave the device."
+    },
+    {
+      "id": "service:stadia",
+      "label": "Stadia map tiles",
+      "kind": "service",
+      "summary": "Live and replay tile requests reveal the viewed area."
+    },
+    {
+      "id": "service:osrm",
+      "label": "OSRM route service",
+      "kind": "service",
+      "summary": "Route coordinates are sent to routing.openstreetmap.de."
+    },
+    {
+      "id": "concept:leaflet",
+      "label": "Leaflet map + routing plugins",
+      "kind": "concept",
+      "summary": "Web CDN scripts; Android bundled vendor scripts."
+    },
+    {
+      "id": "concept:webcrypto",
+      "label": "Browser Web Crypto",
+      "kind": "concept",
+      "summary": "Randomness, SHA-256, AES-GCM and ECDH P-256."
+    },
+    {
+      "id": "concept:geolocation",
+      "label": "Browser geolocation",
+      "kind": "concept",
+      "summary": "GPS callbacks feed the journey session and recording."
+    },
+    {
+      "id": "concept:localstorage",
+      "label": "localStorage preferences",
+      "kind": "concept",
+      "summary": "Name, active journey pointer, voice, search origin, recent searches. Separate per origin/client."
+    },
+    {
+      "id": "concept:sessionstorage",
+      "label": "sessionStorage refusal message",
+      "kind": "concept",
+      "summary": "Temporary reason shown after reload."
+    },
+    {
+      "id": "concept:journeys",
+      "label": "IndexedDB: journeys",
+      "kind": "concept",
+      "summary": "code primary key; destination, timestamps, structured-cloned CryptoKey. Local to origin/profile; tabs sharing both share storage."
+    },
+    {
+      "id": "concept:points",
+      "label": "IndexedDB: points",
+      "kind": "concept",
+      "summary": "Auto ID; code/memberId/time joins. Track samples retained locally."
+    },
+    {
+      "id": "concept:events",
+      "label": "IndexedDB: events",
+      "kind": "concept",
+      "summary": "Auto ID; code/time index; kind + data includes participant metadata."
+    },
+    {
+      "id": "concept:channel",
+      "label": "SHA-256 channel identifier",
+      "kind": "concept",
+      "summary": "Client hashes a six-character code. Obfuscation, not authentication."
+    },
+    {
+      "id": "concept:key",
+      "label": "Journey AES-GCM key",
+      "kind": "concept",
+      "summary": "Generated/imported on a client; shared with group; not provided to relay as a key."
+    },
+    {
+      "id": "concept:invite",
+      "label": "Invite URL fragment",
+      "kind": "concept",
+      "summary": "Code + key after #; imported by client. Browser page request omits fragment."
+    },
+    {
+      "id": "concept:sealed",
+      "label": "Sealed journey messages",
+      "kind": "concept",
+      "summary": "{iv,ct}; hello, position, quick_message, journey_config, bye. The heartbeat republishes a position or hello."
+    },
+    {
+      "id": "concept:handshake",
+      "label": "Code-only key handshake",
+      "kind": "concept",
+      "summary": "Plaintext {hs}; names/member IDs/public keys visible. Wrapped group key. Human Allow/Deny."
+    },
+    {
+      "id": "concept:roster",
+      "label": "In-memory peer roster",
+      "kind": "concept",
+      "summary": "Per session member IDs, last-seen times, location and status."
+    },
+    {
+      "id": "concept:hub",
+      "label": "In-memory relay channels",
+      "kind": "concept",
+      "summary": "Channel ID maps to live sockets; empty channels removed. No shared cross-process bus."
+    },
+    {
+      "id": "output:json",
+      "label": "Journey JSON download",
+      "kind": "output",
+      "summary": "Metadata, participants, points, events; excludes encryption key."
+    },
+    {
+      "id": "output:gpx",
+      "label": "GPX download",
+      "kind": "output",
+      "summary": "A track per member."
+    },
+    {
+      "id": "output:apk",
+      "label": "app-debug.apk",
+      "kind": "output",
+      "summary": "Expected ignored output of assembleDebug; this graph does not rebuild it."
+    },
+    {
+      "id": "output:native-web",
+      "label": "Capacitor packaged web assets",
+      "kind": "output",
+      "summary": "Ignored android/app/src/main/assets/public copied from Android www by cap sync."
+    },
+    {
+      "id": "concept:cap-sync",
+      "label": "npx cap sync android",
+      "kind": "concept",
+      "summary": "Copies Android www and updates native plugin integration."
+    },
+    {
+      "id": "concept:gradle",
+      "label": "Gradle Android build",
+      "kind": "concept",
+      "summary": "assembleDebug via checked-in wrapper."
+    },
+    {
+      "id": "concept:background",
+      "label": "Background location plugin",
+      "kind": "concept",
+      "summary": "BackgroundGeolocation watcher and ongoing notification."
+    },
+    {
+      "id": "concept:haptics",
+      "label": "Haptics plugin",
+      "kind": "concept",
+      "summary": "Optional native click feedback."
+    },
+    {
+      "id": "concept:web-server",
+      "label": "Local static server :3000",
+      "kind": "concept",
+      "summary": "Serves web/frontend only."
+    },
+    {
+      "id": "concept:relay-process",
+      "label": "Local relay :8000",
+      "kind": "concept",
+      "summary": "Uvicorn main:app process."
+    },
+    {
+      "id": "concept:docker",
+      "label": "Relay container image",
+      "kind": "output",
+      "summary": "Python 3.13 slim + requirements + main/services; one worker."
+    },
+    {
+      "id": "concept:fly",
+      "label": "Fly deployment configuration",
+      "kind": "concept",
+      "summary": "Deployment intent in fly.toml; not proof of live infrastructure."
+    },
+    {
+      "id": "concept:render",
+      "label": "Render deployment configuration",
+      "kind": "concept",
+      "summary": "Deployment intent in render.yaml; not proof of live infrastructure."
+    },
+    {
+      "id": "concept:capacitor-bridge",
+      "label": "Capacitor runtime bridge",
+      "kind": "concept",
+      "summary": "BridgeActivity hosts packaged web content and exposes native plugins."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "service:relay",
+      "relation": "connects_to",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "const socket = new WebSocket(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "concept:channel",
+      "relation": "derives",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "deriveChannelId",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "concept:sealed",
+      "relation": "sends_encrypted",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "WayseraCrypto.seal",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "concept:sealed",
+      "relation": "decrypts",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "WayseraCrypto.open",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "concept:handshake",
+      "relation": "exchanges",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "key_request",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/journey.js",
+      "target": "concept:roster",
+      "relation": "maintains",
+      "file": "web/frontend/assets/journey.js",
+      "anchor": "this.members = new Map()",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/crypto.js",
+      "target": "concept:webcrypto",
+      "relation": "uses",
+      "file": "web/frontend/assets/crypto.js",
+      "anchor": "crypto.subtle",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/crypto.js",
+      "target": "concept:key",
+      "relation": "generates",
+      "file": "web/frontend/assets/crypto.js",
+      "anchor": "async function generateJourneyKey",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/crypto.js",
+      "target": "concept:invite",
+      "relation": "encodes",
+      "file": "web/frontend/assets/crypto.js",
+      "anchor": "function buildInviteLink",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/crypto.js",
+      "target": "concept:channel",
+      "relation": "hashes_code",
+      "file": "web/frontend/assets/crypto.js",
+      "anchor": "async function deriveChannelId",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:invite",
+      "relation": "reads",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "parseInviteFragment(window.location.hash)",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:geolocation",
+      "relation": "watches",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "navigator.geolocation.watchPosition",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:localstorage",
+      "relation": "persists_preferences",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "localStorage.setItem(NAME_KEY",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:sessionstorage",
+      "relation": "persists_refusal",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "sessionStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "service:stadia",
+      "relation": "requests_tiles",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "https://tiles.stadiamaps.com/tiles/",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "service:osrm",
+      "relation": "requests_route",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "https://routing.openstreetmap.de/routed-car/route/v1",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:leaflet",
+      "relation": "renders_with",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "L.map(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/replay.js",
+      "target": "service:stadia",
+      "relation": "requests_tiles",
+      "file": "web/frontend/assets/replay.js",
+      "anchor": "https://tiles.stadiamaps.com/tiles/",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/replay.js",
+      "target": "concept:leaflet",
+      "relation": "renders_with",
+      "file": "web/frontend/assets/replay.js",
+      "anchor": "L.map(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/search.js",
+      "target": "service:photon",
+      "relation": "queries",
+      "file": "web/frontend/assets/search.js",
+      "anchor": "const ENDPOINT",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/search.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_search_origin",
+      "file": "web/frontend/assets/search.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/destination-picker.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_recent_searches",
+      "file": "web/frontend/assets/destination-picker.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/store.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_active_journey",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/store.js",
+      "target": "concept:journeys",
+      "relation": "defines_store",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "createObjectStore('journeys'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/store.js",
+      "target": "concept:points",
+      "relation": "defines_store",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "createObjectStore('points'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/store.js",
+      "target": "concept:events",
+      "relation": "defines_store",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "createObjectStore('events'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/export.js",
+      "target": "output:json",
+      "relation": "serializes",
+      "file": "web/frontend/assets/export.js",
+      "anchor": "waysera.journey",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/export.js",
+      "target": "output:gpx",
+      "relation": "serializes",
+      "file": "web/frontend/assets/export.js",
+      "anchor": "<gpx version=",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "file:web/frontend/replay.html",
+      "relation": "navigates_to",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "replay.html?j=",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/destination-picker.js",
+      "target": "file:web/frontend/index.html",
+      "relation": "fills_destination_form",
+      "file": "web/frontend/assets/destination-picker.js",
+      "anchor": "getElementById('destLat')",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/polish.js",
+      "target": "file:web/frontend/assets/destination-picker.js",
+      "relation": "observes_search_dom",
+      "file": "web/frontend/assets/polish.js",
+      "anchor": "document.querySelector('.search-overlay-results')",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "file:web/frontend/assets/vendor/images/marker-icon-2x-green.png",
+      "relation": "loads_dynamic_asset",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "file:web/frontend/assets/vendor/images/marker-icon-2x-grey.png",
+      "relation": "loads_dynamic_asset",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "file:web/frontend/assets/vendor/images/marker-icon-2x-orange.png",
+      "relation": "loads_dynamic_asset",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "service:relay",
+      "relation": "connects_to",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "const socket = new WebSocket(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "concept:channel",
+      "relation": "derives",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "deriveChannelId",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "concept:sealed",
+      "relation": "sends_encrypted",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "WayseraCrypto.seal",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "concept:sealed",
+      "relation": "decrypts",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "WayseraCrypto.open",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "concept:handshake",
+      "relation": "exchanges",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "key_request",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/journey.js",
+      "target": "concept:roster",
+      "relation": "maintains",
+      "file": "android_app/www/assets/journey.js",
+      "anchor": "this.members = new Map()",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/crypto.js",
+      "target": "concept:webcrypto",
+      "relation": "uses",
+      "file": "android_app/www/assets/crypto.js",
+      "anchor": "crypto.subtle",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/crypto.js",
+      "target": "concept:key",
+      "relation": "generates",
+      "file": "android_app/www/assets/crypto.js",
+      "anchor": "async function generateJourneyKey",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/crypto.js",
+      "target": "concept:invite",
+      "relation": "encodes",
+      "file": "android_app/www/assets/crypto.js",
+      "anchor": "function buildInviteLink",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/crypto.js",
+      "target": "concept:channel",
+      "relation": "hashes_code",
+      "file": "android_app/www/assets/crypto.js",
+      "anchor": "async function deriveChannelId",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:invite",
+      "relation": "reads",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "parseInviteFragment(window.location.hash)",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:geolocation",
+      "relation": "watches",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "navigator.geolocation.watchPosition",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:localstorage",
+      "relation": "persists_preferences",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "localStorage.setItem(NAME_KEY",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:sessionstorage",
+      "relation": "persists_refusal",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "sessionStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "service:stadia",
+      "relation": "requests_tiles",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "https://tiles.stadiamaps.com/tiles/",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "service:osrm",
+      "relation": "requests_route",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "https://routing.openstreetmap.de/routed-car/route/v1",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:leaflet",
+      "relation": "renders_with",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "L.map(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/replay.js",
+      "target": "service:stadia",
+      "relation": "requests_tiles",
+      "file": "android_app/www/assets/replay.js",
+      "anchor": "https://tiles.stadiamaps.com/tiles/",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/replay.js",
+      "target": "concept:leaflet",
+      "relation": "renders_with",
+      "file": "android_app/www/assets/replay.js",
+      "anchor": "L.map(",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/search.js",
+      "target": "service:photon",
+      "relation": "queries",
+      "file": "android_app/www/assets/search.js",
+      "anchor": "const ENDPOINT",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/search.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_search_origin",
+      "file": "android_app/www/assets/search.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/destination-picker.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_recent_searches",
+      "file": "android_app/www/assets/destination-picker.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/store.js",
+      "target": "concept:localstorage",
+      "relation": "remembers_active_journey",
+      "file": "android_app/www/assets/store.js",
+      "anchor": "localStorage.setItem",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/store.js",
+      "target": "concept:journeys",
+      "relation": "defines_store",
+      "file": "android_app/www/assets/store.js",
+      "anchor": "createObjectStore('journeys'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/store.js",
+      "target": "concept:points",
+      "relation": "defines_store",
+      "file": "android_app/www/assets/store.js",
+      "anchor": "createObjectStore('points'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/store.js",
+      "target": "concept:events",
+      "relation": "defines_store",
+      "file": "android_app/www/assets/store.js",
+      "anchor": "createObjectStore('events'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/export.js",
+      "target": "output:json",
+      "relation": "serializes",
+      "file": "android_app/www/assets/export.js",
+      "anchor": "waysera.journey",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/export.js",
+      "target": "output:gpx",
+      "relation": "serializes",
+      "file": "android_app/www/assets/export.js",
+      "anchor": "<gpx version=",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "file:android_app/www/replay.html",
+      "relation": "navigates_to",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "replay.html?j=",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/destination-picker.js",
+      "target": "file:android_app/www/index.html",
+      "relation": "fills_destination_form",
+      "file": "android_app/www/assets/destination-picker.js",
+      "anchor": "getElementById('destLat')",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/polish.js",
+      "target": "file:android_app/www/assets/destination-picker.js",
+      "relation": "observes_search_dom",
+      "file": "android_app/www/assets/polish.js",
+      "anchor": "document.querySelector('.search-overlay-results')",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-icon-2x-green.png",
+      "relation": "loads_dynamic_asset",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-icon-2x-grey.png",
+      "relation": "loads_dynamic_asset",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-icon-2x-orange.png",
+      "relation": "loads_dynamic_asset",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "marker-icon-2x-${iconColor}",
+      "detail": "",
+      "basis": "reviewed-template-expansion"
+    },
+    {
+      "source": "concept:points",
+      "target": "concept:journeys",
+      "relation": "joins_by_code",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "points.createIndex('byJourney', ['code', 'ts'])",
+      "detail": "Application association by journey code, not an IndexedDB foreign key.",
+      "basis": "source"
+    },
+    {
+      "source": "concept:events",
+      "target": "concept:journeys",
+      "relation": "joins_by_code",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "events.createIndex('byJourney', ['code', 'ts'])",
+      "detail": "Application association by journey code, not an IndexedDB foreign key.",
+      "basis": "source"
+    },
+    {
+      "source": "concept:points",
+      "target": "concept:events",
+      "relation": "joins_by_member_id",
+      "file": "web/frontend/assets/export.js",
+      "anchor": "function namesFromEvents",
+      "detail": "Member IDs associate track samples with names recovered from event records.",
+      "basis": "reviewed-data-flow"
+    },
+    {
+      "source": "concept:journeys",
+      "target": "concept:key",
+      "relation": "stores_crypto_key",
+      "file": "web/frontend/assets/store.js",
+      "anchor": "Journeys hold the CryptoKey object directly",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "service:relay",
+      "target": "file:web/backend/main.py",
+      "relation": "implemented_by",
+      "file": "web/backend/main.py",
+      "anchor": "@app.websocket",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "service:health",
+      "target": "file:web/backend/main.py",
+      "relation": "implemented_by",
+      "file": "web/backend/main.py",
+      "anchor": "@app.get(\"/v1/health\")",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "service:root",
+      "target": "file:web/backend/main.py",
+      "relation": "implemented_by",
+      "file": "web/backend/main.py",
+      "anchor": "@app.get(\"/\")",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/services/relay.py",
+      "target": "concept:hub",
+      "relation": "maintains",
+      "file": "web/backend/services/relay.py",
+      "anchor": "self._channels:",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/main.py",
+      "target": "concept:hub",
+      "relation": "joins_and_forwards",
+      "file": "web/backend/main.py",
+      "anchor": "hub.relay(channel_id, websocket, frame)",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "service:relay",
+      "target": "concept:sealed",
+      "relation": "forwards_verbatim",
+      "file": "web/backend/main.py",
+      "anchor": "frame = await websocket.receive_text()",
+      "detail": "No payload parsing; sender excluded.",
+      "basis": "source"
+    },
+    {
+      "source": "service:relay",
+      "target": "concept:handshake",
+      "relation": "forwards_verbatim",
+      "file": "web/backend/main.py",
+      "anchor": "frame = await websocket.receive_text()",
+      "detail": "Handshake metadata remains visible in these text frames.",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/tests/test_relay.py",
+      "target": "file:web/backend/main.py",
+      "relation": "tests",
+      "file": "web/backend/tests/test_relay.py",
+      "anchor": "import main",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/run_browser_tests.py",
+      "target": "file:web/frontend/tests.html",
+      "relation": "exercises",
+      "file": "web/tools/run_browser_tests.py",
+      "anchor": "/tests.html",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/smoke_app.py",
+      "target": "file:web/frontend/index.html",
+      "relation": "exercises",
+      "file": "web/tools/smoke_app.py",
+      "anchor": "/index.html",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/integration_test.py",
+      "target": "file:web/backend/main.py",
+      "relation": "exercises",
+      "file": "web/tools/integration_test.py",
+      "anchor": "\"main:app\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/integration_test.py",
+      "target": "file:web/frontend/index.html",
+      "relation": "exercises",
+      "file": "web/tools/integration_test.py",
+      "anchor": "/index.html",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/integration_test.py",
+      "target": "file:web/frontend/replay.html",
+      "relation": "exercises",
+      "file": "web/tools/integration_test.py",
+      "anchor": "/replay.html",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/check_layouts.py",
+      "target": "file:web/frontend/index.html",
+      "relation": "exercises",
+      "file": "web/tools/check_layouts.py",
+      "anchor": "PAGES =",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/check_layouts.py",
+      "target": "file:web/frontend/replay.html",
+      "relation": "exercises",
+      "file": "web/tools/check_layouts.py",
+      "anchor": "PAGES =",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/check_layouts.py",
+      "target": "file:android_app/www/index.html",
+      "relation": "exercises",
+      "file": "web/tools/check_layouts.py",
+      "anchor": "WAYSERA_WEB_ROOT",
+      "detail": "Android layout targets require WAYSERA_WEB_ROOT override.",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/tools/check_layouts.py",
+      "target": "file:android_app/www/replay.html",
+      "relation": "exercises",
+      "file": "web/tools/check_layouts.py",
+      "anchor": "WAYSERA_WEB_ROOT",
+      "detail": "Android layout targets require WAYSERA_WEB_ROOT override.",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/manifest.webmanifest",
+      "target": "file:web/frontend/assets/brand/waysera-app-icon.svg",
+      "relation": "declares_icon",
+      "file": "web/frontend/manifest.webmanifest",
+      "anchor": "assets/brand/waysera-app-icon.svg",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:BRAND.md",
+      "target": "file:web/frontend/assets/brand/waysera-mark.svg",
+      "relation": "documents_asset",
+      "file": "BRAND.md",
+      "anchor": "waysera-mark.svg",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:BRAND.md",
+      "target": "file:web/frontend/assets/brand/waysera-lockup.svg",
+      "relation": "documents_asset",
+      "file": "BRAND.md",
+      "anchor": "waysera-lockup.svg",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:BRAND.md",
+      "target": "file:web/frontend/assets/brand/favicon.svg",
+      "relation": "documents_asset",
+      "file": "BRAND.md",
+      "anchor": "favicon.svg",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:BRAND.md",
+      "target": "file:web/frontend/assets/brand/waysera-app-icon.svg",
+      "relation": "documents_asset",
+      "file": "BRAND.md",
+      "anchor": "waysera-app-icon.svg",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:BRAND.md",
+      "target": "file:android_app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "relation": "documents_asset",
+      "file": "BRAND.md",
+      "anchor": "mipmap-anydpi-v26/ic_launcher.xml",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/start.sh",
+      "target": "concept:web-server",
+      "relation": "starts",
+      "file": "web/start.sh",
+      "anchor": "python3 -m http.server 3000",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/start.sh",
+      "target": "concept:relay-process",
+      "relation": "starts",
+      "file": "web/start.sh",
+      "anchor": "uvicorn main:app",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:web-server",
+      "target": "file:web/frontend/index.html",
+      "relation": "serves",
+      "file": "web/start.sh",
+      "anchor": "$PROJECT_DIR/frontend",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:relay-process",
+      "target": "file:web/backend/main.py",
+      "relation": "runs",
+      "file": "web/start.sh",
+      "anchor": "uvicorn main:app",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/stop.sh",
+      "target": "concept:web-server",
+      "relation": "stops_port_occupants",
+      "file": "web/stop.sh",
+      "anchor": "lsof -ti:3000",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/stop.sh",
+      "target": "concept:relay-process",
+      "relation": "stops_port_occupants",
+      "file": "web/stop.sh",
+      "anchor": "lsof -ti:8000",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/env.example",
+      "target": "file:web/backend/main.py",
+      "relation": "documents_environment",
+      "file": "web/env.example",
+      "anchor": "ALLOWED_ORIGINS=",
+      "detail": "Example only; startup script does not automatically source this file.",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/Dockerfile",
+      "target": "concept:docker",
+      "relation": "builds",
+      "file": "web/backend/Dockerfile",
+      "anchor": "FROM python:3.13-slim",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/Dockerfile",
+      "target": "file:web/backend/requirements.txt",
+      "relation": "copies_into_image",
+      "file": "web/backend/Dockerfile",
+      "anchor": "COPY requirements.txt",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/Dockerfile",
+      "target": "file:web/backend/main.py",
+      "relation": "copies_into_image",
+      "file": "web/backend/Dockerfile",
+      "anchor": "COPY main.py",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/Dockerfile",
+      "target": "file:web/backend/services/relay.py",
+      "relation": "copies_into_image",
+      "file": "web/backend/Dockerfile",
+      "anchor": "COPY services",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/.dockerignore",
+      "target": "file:web/backend/Dockerfile",
+      "relation": "filters_context",
+      "file": "web/backend/.dockerignore",
+      "anchor": ".venv/",
+      "detail": "",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:web/backend/fly.toml",
+      "target": "file:web/backend/Dockerfile",
+      "relation": "builds_with",
+      "file": "web/backend/fly.toml",
+      "anchor": "dockerfile =",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/fly.toml",
+      "target": "concept:fly",
+      "relation": "configures",
+      "file": "web/backend/fly.toml",
+      "anchor": "app =",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:fly",
+      "target": "service:health",
+      "relation": "checks",
+      "file": "web/backend/fly.toml",
+      "anchor": "path = \"/v1/health\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/render.yaml",
+      "target": "concept:render",
+      "relation": "configures",
+      "file": "web/backend/render.yaml",
+      "anchor": "rootDir: web/backend",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/render.yaml",
+      "target": "file:web/backend/main.py",
+      "relation": "starts",
+      "file": "web/backend/render.yaml",
+      "anchor": "startCommand:",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/render.yaml",
+      "target": "file:web/backend/requirements.txt",
+      "relation": "installs",
+      "file": "web/backend/render.yaml",
+      "anchor": "buildCommand:",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/build-apk.sh",
+      "target": "concept:cap-sync",
+      "relation": "runs",
+      "file": "android_app/build-apk.sh",
+      "anchor": "npx cap sync android",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/build-apk.sh",
+      "target": "concept:gradle",
+      "relation": "runs",
+      "file": "android_app/build-apk.sh",
+      "anchor": "./gradlew assembleDebug",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:gradle",
+      "target": "output:apk",
+      "relation": "produces",
+      "file": "android_app/build-apk.sh",
+      "anchor": "app-debug.apk",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:cap-sync",
+      "target": "file:android_app/capacitor.config.json",
+      "relation": "reads",
+      "file": "android_app/capacitor.config.json",
+      "anchor": "\"webDir\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:cap-sync",
+      "target": "output:native-web",
+      "relation": "copies_web_directory",
+      "file": "android_app/capacitor.config.json",
+      "anchor": "\"webDir\": \"www\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "output:native-web",
+      "target": "file:android_app/www/index.html",
+      "relation": "copies_from",
+      "file": "android_app/capacitor.config.json",
+      "anchor": "\"webDir\": \"www\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "output:apk",
+      "target": "output:native-web",
+      "relation": "packages",
+      "file": "android_app/build-apk.sh",
+      "anchor": "npx cap sync android",
+      "detail": "Conceptual build chain; ignored outputs are not inventoried as source files.",
+      "basis": "reviewed-build-flow"
+    },
+    {
+      "source": "file:android_app/build-apk.sh",
+      "target": "file:android_app/www/assets/config.js",
+      "relation": "uses_android_source",
+      "file": "android_app/build-apk.sh",
+      "anchor": "www/ is this app's own source",
+      "detail": "",
+      "basis": "documented-build-flow"
+    },
+    {
+      "source": "file:android_app/build-apk.sh",
+      "target": "file:android_app/www/assets/index.js",
+      "relation": "uses_android_source",
+      "file": "android_app/build-apk.sh",
+      "anchor": "www/ is this app's own source",
+      "detail": "",
+      "basis": "documented-build-flow"
+    },
+    {
+      "source": "file:android_app/android/settings.gradle",
+      "target": "file:android_app/android/app/build.gradle",
+      "relation": "includes",
+      "file": "android_app/android/settings.gradle",
+      "anchor": "include ':app'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/settings.gradle",
+      "target": "file:android_app/android/capacitor.settings.gradle",
+      "relation": "includes",
+      "file": "android_app/android/settings.gradle",
+      "anchor": "apply from: 'capacitor.settings.gradle'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/capacitor.build.gradle",
+      "relation": "uses_build_configuration",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply from: 'capacitor.build.gradle'",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/proguard-rules.pro",
+      "relation": "uses_build_configuration",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "proguard-rules.pro",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/variables.gradle",
+      "relation": "uses_build_configuration",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "rootProject.ext.compileSdkVersion",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/build.gradle",
+      "target": "file:android_app/android/variables.gradle",
+      "relation": "includes",
+      "file": "android_app/android/build.gradle",
+      "anchor": "variables.gradle",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/gradlew",
+      "target": "file:android_app/android/gradle/wrapper/gradle-wrapper.jar",
+      "relation": "launches_wrapper",
+      "file": "android_app/android/gradlew",
+      "anchor": "gradle-wrapper.jar",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/gradlew.bat",
+      "target": "file:android_app/android/gradle/wrapper/gradle-wrapper.jar",
+      "relation": "launches_wrapper",
+      "file": "android_app/android/gradlew.bat",
+      "anchor": "gradle-wrapper.jar",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "concept:gradle",
+      "target": "file:android_app/android/gradlew",
+      "relation": "uses_wrapper",
+      "file": "android_app/build-apk.sh",
+      "anchor": "./gradlew assembleDebug",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/src/main/AndroidManifest.xml",
+      "target": "file:android_app/android/app/src/main/java/com/waysera/app/MainActivity.java",
+      "relation": "launches_activity",
+      "file": "android_app/android/app/src/main/AndroidManifest.xml",
+      "anchor": "android:name=\".MainActivity\"",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/src/main/java/com/waysera/app/MainActivity.java",
+      "target": "concept:capacitor-bridge",
+      "relation": "hosts_capacitor_bridge",
+      "file": "android_app/android/app/src/main/java/com/waysera/app/MainActivity.java",
+      "anchor": "extends BridgeActivity",
+      "detail": "Native activity extends Capacitor BridgeActivity.",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/android-location.js",
+      "target": "concept:background",
+      "relation": "calls_native_plugin",
+      "file": "android_app/www/assets/android-location.js",
+      "anchor": "Capacitor.Plugins.BackgroundGeolocation",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/polish.js",
+      "target": "concept:haptics",
+      "relation": "calls_native_plugin",
+      "file": "android_app/www/assets/polish.js",
+      "anchor": "Capacitor.Plugins.Haptics",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/android/app/src/main/AndroidManifest.xml",
+      "target": "concept:background",
+      "relation": "declares_location_permissions",
+      "file": "android_app/android/app/src/main/AndroidManifest.xml",
+      "anchor": "android.permission.FOREGROUND_SERVICE_LOCATION",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "file:android_app/www/assets/android-location.js",
+      "relation": "overridden_by_native_wrapper",
+      "file": "android_app/www/assets/android-location.js",
+      "anchor": "window.startLocationTracking =",
+      "detail": "Android-only script replaces global start/stop location functions.",
+      "basis": "reviewed-runtime-flow"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-land-hdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-land-mdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-land-xhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-land-xxhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-land-xxxhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-port-hdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-port-mdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-port-xhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-port-xxhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/drawable-port-xxxhdpi/splash.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/layout/activity_main.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/values/ic_launcher_background.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/values/strings.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/values/styles.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/main/res/xml/file_paths.xml",
+      "relation": "packages_resource_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "apply plugin: 'com.android.application'",
+      "detail": "Default Android source-set placement; no APK build was run.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/package-lock.json",
+      "target": "file:android_app/package.json",
+      "relation": "locks_dependencies",
+      "file": "android_app/package-lock.json",
+      "anchor": "\"lockfileVersion\"",
+      "detail": "Lockfile corresponds to the package manifest; transitive packages remain inside lockfile rather than expanded as graph nodes.",
+      "basis": "source"
+    },
+    {
+      "source": "concept:gradle",
+      "target": "file:android_app/android/gradle.properties",
+      "relation": "reads_project_properties",
+      "file": "android_app/android/gradle.properties",
+      "anchor": "org.gradle.jvmargs",
+      "detail": "Gradle convention; not a build execution trace.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/gradle/wrapper/gradle-wrapper.jar",
+      "target": "file:android_app/android/gradle/wrapper/gradle-wrapper.properties",
+      "relation": "reads_distribution_configuration",
+      "file": "android_app/android/gradle/wrapper/gradle-wrapper.properties",
+      "anchor": "distributionUrl",
+      "detail": "Wrapper configuration convention.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java",
+      "relation": "includes_template_test_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "testImplementation ",
+      "detail": "Template source set; not evidence of native feature coverage.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/android/app/build.gradle",
+      "target": "file:android_app/android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java",
+      "relation": "includes_template_test_by_convention",
+      "file": "android_app/android/app/build.gradle",
+      "anchor": "androidTestImplementation ",
+      "detail": "Template source set; not evidence of native feature coverage.",
+      "basis": "build-convention"
+    },
+    {
+      "source": "file:android_app/www/assets/vendor/leaflet.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-icon-2x.png",
+      "relation": "references_default_marker",
+      "file": "android_app/www/assets/vendor/leaflet.js",
+      "anchor": "marker-icon-2x.png",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/vendor/leaflet.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-icon.png",
+      "relation": "references_default_marker",
+      "file": "android_app/www/assets/vendor/leaflet.js",
+      "anchor": "marker-icon.png",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/vendor/leaflet.js",
+      "target": "file:android_app/www/assets/vendor/images/marker-shadow.png",
+      "relation": "references_default_marker",
+      "file": "android_app/www/assets/vendor/leaflet.js",
+      "anchor": "marker-shadow.png",
+      "detail": "",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/backend/pytest.ini",
+      "target": "file:web/backend/tests/test_relay.py",
+      "relation": "selects_tests",
+      "file": "web/backend/pytest.ini",
+      "anchor": "testpaths",
+      "detail": "Pytest collection configuration.",
+      "basis": "source"
+    },
+    {
+      "source": "concept:background",
+      "target": "package:@capacitor-community/background-geolocation",
+      "relation": "implemented_by_package",
+      "file": "android_app/package.json",
+      "anchor": "\"@capacitor-community/background-geolocation\"",
+      "detail": "Runtime plugin calls were separately traced in Android JavaScript.",
+      "basis": "reviewed-runtime-flow"
+    },
+    {
+      "source": "concept:haptics",
+      "target": "package:@capacitor/haptics",
+      "relation": "implemented_by_package",
+      "file": "android_app/package.json",
+      "anchor": "\"@capacitor/haptics\"",
+      "detail": "Runtime plugin calls were separately traced in Android JavaScript.",
+      "basis": "reviewed-runtime-flow"
+    },
+    {
+      "source": "concept:capacitor-bridge",
+      "target": "output:native-web",
+      "relation": "hosts_packaged_content",
+      "file": "android_app/capacitor.config.json",
+      "anchor": "\"webDir\": \"www\"",
+      "detail": "Runtime hosting inferred from BridgeActivity plus Capacitor webDir; not an observed APK execution.",
+      "basis": "reviewed-runtime-flow"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:journeys",
+      "relation": "records",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "WayseraStore.putJourney(journey)",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:points",
+      "relation": "records",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "WayseraStore.appendPoints(code, batch)",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/index.js",
+      "target": "concept:events",
+      "relation": "records",
+      "file": "web/frontend/assets/index.js",
+      "anchor": "WayseraStore.appendEvent(currentRoom.room_id",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/replay.js",
+      "target": "concept:journeys",
+      "relation": "reads_for_playback",
+      "file": "web/frontend/assets/replay.js",
+      "anchor": "WayseraStore.getJourney(code)",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/replay.js",
+      "target": "concept:points",
+      "relation": "reads_for_playback",
+      "file": "web/frontend/assets/replay.js",
+      "anchor": "WayseraStore.getPoints(code)",
+      "basis": "source"
+    },
+    {
+      "source": "file:web/frontend/assets/replay.js",
+      "target": "concept:events",
+      "relation": "reads_for_playback",
+      "file": "web/frontend/assets/replay.js",
+      "anchor": "WayseraStore.getEvents(code)",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:journeys",
+      "relation": "records",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "WayseraStore.putJourney(journey)",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:points",
+      "relation": "records",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "WayseraStore.appendPoints(code, batch)",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/index.js",
+      "target": "concept:events",
+      "relation": "records",
+      "file": "android_app/www/assets/index.js",
+      "anchor": "WayseraStore.appendEvent(currentRoom.room_id",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/replay.js",
+      "target": "concept:journeys",
+      "relation": "reads_for_playback",
+      "file": "android_app/www/assets/replay.js",
+      "anchor": "WayseraStore.getJourney(code)",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/replay.js",
+      "target": "concept:points",
+      "relation": "reads_for_playback",
+      "file": "android_app/www/assets/replay.js",
+      "anchor": "WayseraStore.getPoints(code)",
+      "basis": "source"
+    },
+    {
+      "source": "file:android_app/www/assets/replay.js",
+      "target": "concept:events",
+      "relation": "reads_for_playback",
+      "file": "android_app/www/assets/replay.js",
+      "anchor": "WayseraStore.getEvents(code)",
+      "basis": "source"
+    }
+  ]
+}

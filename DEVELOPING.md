@@ -141,9 +141,17 @@ Set `ALLOWED_ORIGINS` to your frontend origin. Note that WebSocket upgrades are 
 
 **Web client** — a Render static site, root directory `web/frontend`, publish directory `.`.
 
-Map tiles come from CARTO, which needs no API key, so there is no token to
-rotate and nothing secret is shipped to visitors. Switching domains needs no
-tile-provider change.
+Map tiles come from Stadia Maps (`osm_bright`, `alidade_smooth_dark` at night).
+
+Stadia serves unauthenticated requests when the referer is `localhost`, which
+covers local development and the Android app — a Capacitor WebView reports
+`http://localhost`. **That allowance is for development only.** A released build
+must set `STADIA_KEY` in `assets/config.js` or tiles will 401 for every user.
+
+CARTO was used previously and was dropped: it began watermarking unauthenticated
+tiles, and a free key obtained from their site never authenticated — verified
+against several parameter names, both hostnames, fresh cache misses and a
+matching referer.
 
 ---
 

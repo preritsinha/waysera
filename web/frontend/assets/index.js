@@ -468,14 +468,18 @@ function initializeMap() {
         // Streets while every design decision here — including the night
         // basemap — had been made against CARTO and only ever ran locally.
         //
-        // CARTO needs no key, so no token reaches the client at all.
+        // Stadia Maps. CARTO began watermarking unauthenticated tiles and the
+        // free key we obtained never authenticated, so the map is served here
+        // instead. osm_bright is close to what CARTO Voyager looked like.
         const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const basemap = dark ? 'dark_all' : 'rastertiles/voyager';
+        const basemap = dark ? 'alidade_smooth_dark' : 'osm_bright';
 
-        L.tileLayer(`https://{s}.basemaps.cartocdn.com/${basemap}/{z}/{x}/{y}{r}.png`, {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 19,
+        const stadiaKey = (window.WAYSERA_CONFIG && window.WAYSERA_CONFIG.STADIA_KEY) || '';
+        const keyParam = stadiaKey ? `?api_key=${encodeURIComponent(stadiaKey)}` : '';
+
+        L.tileLayer(`https://tiles.stadiamaps.com/tiles/${basemap}/{z}/{x}/{y}{r}.png${keyParam}`, {
+            attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 20,
             detectRetina: true,
             updateWhenIdle: false,
             updateWhenZooming: false,
@@ -485,8 +489,8 @@ function initializeMap() {
         // Add destination marker (red)
         destMarker = L.marker([destination.lat, destination.lng], {
             icon: L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconUrl: 'assets/vendor/images/marker-icon-2x-red.png',
+                shadowUrl: 'assets/vendor/images/marker-shadow.png',
                 iconSize: [25, 41],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
@@ -534,8 +538,8 @@ function updateMemberMarker(memberId, memberName, location, status) {
         const iconColor = status === 'live' ? 'green' : status === 'stale' ? 'orange' : 'grey';
         const marker = L.marker([location.lat, location.lng], {
             icon: L.icon({
-                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${iconColor}.png`,
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconUrl: `assets/vendor/images/marker-icon-2x-${iconColor}.png`,
+                shadowUrl: 'assets/vendor/images/marker-shadow.png',
                 iconSize: [25, 41],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
@@ -1200,15 +1204,22 @@ function positionChanged(before, after) {
  * Drop every map layer belonging to one member.
  *
  * routingControls holds two different shapes: a real Leaflet control when OSRM
- * answered, and a bare { _line } sentinel when it did not. Passing the second
- * to removeControl throws, which used to abort the surrounding loop and leave
- * everyone else without a route.
+ * answered, and a bare { fallbackLine } sentinel when it did not. Passing the
+ * second to removeControl throws, which used to abort the surrounding loop and
+ * leave everyone else without a route.
+ *
+ * The sentinel key must not be _line. Leaflet Routing Machine sets _line on the
+ * real control as soon as it draws a route, so discriminating on _line sent
+ * live controls down the fallback branch: their line was removed but the
+ * control stayed on the map, leaking its container, its _plan layer, its
+ * alternatives and a zoomend listener on every redraw. Only removeControl runs
+ * the control's own onRemove, which cleans all of that up.
  */
 function removeMemberLayers(memberId) {
     const entry = routingControls[memberId];
     if (entry) {
         try {
-            if (entry._line) map.removeLayer(entry._line);
+            if (entry.fallbackLine) map.removeLayer(entry.fallbackLine);
             else map.removeControl(entry);
         } catch (error) {
             /* already gone */
@@ -1235,7 +1246,7 @@ function drawRoute(memberId, fromLocation, toDestination) {
     if (routingControls[memberId]) {
         const existing = routingControls[memberId];
         try {
-            if (existing._line) map.removeLayer(existing._line);
+            if (existing.fallbackLine) map.removeLayer(existing.fallbackLine);
             else map.removeControl(existing);
         } catch (error) {
             /* already gone */
@@ -1297,7 +1308,7 @@ function drawRoute(memberId, fromLocation, toDestination) {
             }).addTo(map);
             
             // Store the polyline instead
-            routingControls[memberId] = { _line: directLine };
+            routingControls[memberId] = { fallbackLine: directLine };
         });
         
         
@@ -1316,7 +1327,7 @@ function drawRoute(memberId, fromLocation, toDestination) {
                 dashArray: '10, 10'
             }).addTo(map);
             
-            routingControls[memberId] = { _line: directLine };
+            routingControls[memberId] = { fallbackLine: directLine };
         } catch (fallbackError) {
             console.error('Straight-line fallback failed too', fallbackError);
         }
@@ -1335,13 +1346,12 @@ function clearAllRoutes() {
     for (const [memberId, control] of Object.entries(routingControls)) {
         if (control && map) {
             try {
-                // If it's a routing control
-                if (control.removeFrom) {
+                // Same discriminator as removeMemberLayers: the sentinel's
+                // own key, never an LRM internal.
+                if (control.fallbackLine) {
+                    map.removeLayer(control.fallbackLine);
+                } else {
                     map.removeControl(control);
-                }
-                // If it's a fallback polyline
-                else if (control._line && control._line.remove) {
-                    control._line.remove();
                 }
             } catch (error) {
                 console.warn('Error removing route for', memberId, error);

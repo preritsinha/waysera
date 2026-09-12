@@ -1,0 +1,44 @@
+# Fly.io deployment for the Waysera relay.
+#
+#   cd web/backend
+#   fly launch --no-deploy --copy-config   (first time, to pick a name/region)
+#   fly deploy
+#
+# The app name is set on first launch; change it here if you pick a different
+# one. Region should be near your users, not near you — every position frame
+# makes a round trip through it.
+
+app = "waysera-relay"
+primary_region = "bom"          # Mumbai. Closest to Bengaluru testing.
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8000
+  force_https = true            # wss:// only; a browser on HTTPS refuses ws://
+
+  # The whole point of moving off a sleeping free tier. auto_stop would
+  # reintroduce exactly the cold start we left Render to avoid, and a relay
+  # that is asleep when someone opens a journey is a relay that is not working.
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  # One process holds every socket for a channel. Two machines would split a
+  # journey across them, so this must stay at one until the registry is shared.
+  [http_service.concurrency]
+    type = "connections"
+    soft_limit = 200
+    hard_limit = 250
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/v1/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"              # It forwards bytes and keeps a dict of sockets.

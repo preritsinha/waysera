@@ -25,7 +25,14 @@ const WAYSERA_CONFIG = {
     // useless, but joining by six-character code still works normally.
     PUBLIC_ORIGIN: '',
 
-    // Map tiles come from CARTO, which needs no key.
+
+    // Stadia Maps key. Free tier, request at https://stadiamaps.com.
+    //
+    // Stadia serves unauthenticated requests when the referer is localhost,
+    // which covers local development and the Android app (a Capacitor WebView
+    // reports http://localhost). That allowance is for development. A released
+    // build must carry a real key, or tiles will 401 for every user.
+    STADIA_KEY: ''
 };
 
 window.WAYSERA_CONFIG = WAYSERA_CONFIG;

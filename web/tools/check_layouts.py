@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import os
 import threading
 import time
 import urllib.request
@@ -27,7 +28,9 @@ from pathlib import Path
 import websockets
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-WEB_ROOT = PROJECT_ROOT / "frontend"
+# Defaults to the web client. Set WAYSERA_WEB_ROOT to point the same checks at
+# android_app/www, which no harness would otherwise ever load.
+WEB_ROOT = Path(os.environ["WAYSERA_WEB_ROOT"]).resolve() if os.environ.get("WAYSERA_WEB_ROOT") else PROJECT_ROOT / "frontend"
 PORT = 8770
 DEBUG_PORT = 9335
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

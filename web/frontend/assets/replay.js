@@ -99,17 +99,16 @@
     function buildMap(points) {
         map = L.map('replayMap', { preferCanvas: true, zoomSnap: 0.25 });
 
-        // Same basemap as the live map, including the night variant. Replay was
-        // still on raw OSM tiles, so a finished journey looked like a different
-        // product from the one that recorded it.
+        // Same basemap as the live map, including the night variant.
         const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const basemap = dark ? 'dark_all' : 'rastertiles/voyager';
+        const basemap = dark ? 'alidade_smooth_dark' : 'osm_bright';
+        const stadiaKey = (window.WAYSERA_CONFIG && window.WAYSERA_CONFIG.STADIA_KEY) || '';
+        const keyParam = stadiaKey ? `?api_key=${encodeURIComponent(stadiaKey)}` : '';
 
-        L.tileLayer(`https://{s}.basemaps.cartocdn.com/${basemap}/{z}/{x}/{y}{r}.png`, {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
+        L.tileLayer(`https://tiles.stadiamaps.com/tiles/${basemap}/{z}/{x}/{y}{r}.png${keyParam}`, {
+            attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             detectRetina: true,
-            maxZoom: 19
+            maxZoom: 20
         }).addTo(map);
 
         for (const [memberId, track] of tracks) {

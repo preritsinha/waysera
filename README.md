@@ -54,7 +54,7 @@ leaving your device, and it would be dishonest to claim otherwise:
 
 | Service | What it receives |
 | --- | --- |
-| CARTO | Requests for map tiles, which reveal the area you are looking at |
+| Stadia Maps | Requests for map tiles, which reveal the area you are looking at |
 | Photon (Komoot) | Every destination you search for, and roughly where you are |
 | openstreetmap.de | Your start **and** destination, for every route |
 

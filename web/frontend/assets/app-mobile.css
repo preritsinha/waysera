@@ -102,62 +102,6 @@
   }
 }
 
-/* ============= Brand lockup ============= */
-
-.brand-lockup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-6);
-}
-
-.brand-mark {
-  display: block;
-  width: 44px;
-  height: 44px;
-  color: var(--waysera-primary);
-}
-
-.brand-name {
-  font-size: 34px;
-  font-weight: 780;
-  letter-spacing: -0.8px;
-  line-height: 1.1;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.brand-name .brand-name-accent {
-  color: var(--waysera-primary);
-}
-
-.brand-tagline {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-align: center;
-  margin: 0;
-}
-
-.brand-description {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--text-tertiary);
-  text-align: center;
-  max-width: 34ch;
-  margin: 0;
-}
-
-.brand-trust-line {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-align: center;
-  margin-top: var(--space-1);
-}
-
 /* Accessible focus, applied consistently rather than per-control */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--waysera-primary);
@@ -280,10 +224,10 @@ body {
   margin: 0 auto;
 }
 
-/* The home heading and subtitle are now the .brand-lockup block defined above.
+/* The home heading and subtitle are the .home-hero-* block defined below.
    The old #homePage h1 / .subtitle rules were removed rather than left in
-   place, because an ID selector outranks .brand-name and would have silently
-   overridden the wordmark's weight and spacing. */
+   place, because an ID selector outranks .home-hero-name and would have
+   silently overridden the wordmark's weight and spacing. */
 
 /* Form sections - iOS card style */
 .form-section {
@@ -426,13 +370,6 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 15px;
   display: none;
   animation: slideIn 0.3s ease-out;
-}
-
-.result.success {
-  display: block;
-  background: rgba(52, 199, 89, 0.1);
-  color: var(--ios-green);
-  border: 1px solid rgba(52, 199, 89, 0.3);
 }
 
 .result.error {
@@ -666,60 +603,6 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Riders list */
 .riders-list {
   margin-bottom: var(--space-4);
-}
-
-.rider-item {
-  padding: var(--space-3);
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-2);
-  border-left: 3px solid var(--ios-blue);
-  transition: background var(--transition-fast);
-}
-
-.rider-item:active {
-  background: var(--ios-gray-lighter);
-}
-
-.rider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-2);
-}
-
-.rider-name {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.rider-status {
-  font-size: 13px;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-
-.rider-status.live {
-  background: rgba(52, 199, 89, 0.15);
-  color: var(--ios-green);
-}
-
-.rider-status.stale {
-  background: rgba(255, 149, 0, 0.15);
-  color: var(--ios-orange);
-}
-
-.rider-status.offline {
-  background: var(--ios-gray-lighter);
-  color: var(--ios-gray);
-}
-
-.rider-details {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  line-height: 1.4;
 }
 
 /* Action buttons */
@@ -1014,66 +897,6 @@ input[type="number"]::-webkit-outer-spin-button {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Lane Guidance */
-.lane-guidance {
-  padding: 16px 24px;
-  background: rgba(0, 0, 0, 0.9);  /* More opaque, no blur needed */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  margin-bottom: 16px;
-  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;  /* Allow map interaction through lane guidance */
-  /* NO backdrop-filter - prevents map blur */
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.lane-arrows {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-}
-
-.lane-arrow {
-  width: 40px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.lane-arrow.active {
-  background: linear-gradient(135deg, #1A73E8 0%, #34A853 100%);
-  border-color: #FFFFFF;
-  box-shadow: 0 0 16px rgba(26, 115, 232, 0.6);
-  transform: scale(1.1);
-}
-
-.lane-arrow svg {
-  width: 24px;
-  height: 24px;
-  color: rgba(255, 255, 255, 0.6);
-  transition: color 0.3s;
-}
-
-.lane-arrow.active svg {
-  color: #FFFFFF;
-}
-
 /* Stats Container */
 .nav-stats-container {
   display: flex;
@@ -1264,7 +1087,6 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Improve touch target sizes (minimum 44x44px for iOS) */
 .btn,
 .nav-exit-btn,
-.lane-arrow,
 .suggestion-item {
   min-width: 44px;
   min-height: 44px;
@@ -1363,8 +1185,7 @@ a,
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .nav-instruction-container,
-  .nav-stats-container,
-  .lane-guidance {
+  .nav-stats-container {
     border-width: 2px;
   }
   
@@ -1429,10 +1250,6 @@ a,
     border-color: rgba(255, 255, 255, 0.2);
   }
   
-  .lane-guidance {
-    background: rgba(0, 0, 0, 0.75);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
 }
 
 /* Loading states */
@@ -2634,7 +2451,13 @@ a,
   top: max(82px, calc(env(safe-area-inset-top) + 74px)) !important;
 }
 
-/* Bottom sheet: peek by default, slides up on expand */
+/* Bottom sheet: peek by default, slides up on expand.
+
+   transform is deliberately NOT !important here or on .expanded. The drag
+   handler in index.js writes an inline transform on every touchmove, and an
+   inline declaration is author-normal — an !important rule would beat it and
+   the sheet would refuse to follow the finger. .nav-active below keeps its
+   !important on purpose, so starting navigation still overrides a stale drag. */
 .bottom-sheet {
   position: fixed !important;
   bottom: 0 !important;
@@ -2649,14 +2472,17 @@ a,
   display: flex !important;
   flex-direction: column !important;
   /* Peek: only the sheet-header is visible (~72px) */
-  transform: translateY(calc(100% - 72px)) !important;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform: translateY(calc(100% - 72px));
+  /* Not !important: the drag handler sets transition:none on touchstart so the
+     sheet tracks the finger. An important transition would defeat that and the
+     sheet would animate ~0.3s behind every move. */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding-bottom: env(safe-area-inset-bottom) !important;
   touch-action: pan-y !important;
 }
 
 .bottom-sheet.expanded {
-  transform: translateY(0) !important;
+  transform: translateY(0);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2823,26 +2649,9 @@ a,
     max-width: none !important;
     transform: none !important;
     padding: 10px 14px !important;
-    border-radius: 18px !important;
-    background: rgba(255, 255, 255, 0.92) !important;
-    box-shadow:
-      0 1px 0 rgba(0,0,0,0.04),
-      0 4px 20px rgba(0,0,0,0.16) !important;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .room-header {
-      background: rgba(18, 20, 30, 0.93) !important;
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.05),
-        0 4px 20px rgba(0,0,0,0.55) !important;
-    }
   }
 
   .room-info h1 {
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.2px !important;
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
@@ -2859,14 +2668,11 @@ a,
 
   /* Bottom sheet */
   .bottom-sheet {
-    border-top-left-radius: 22px !important;
-    border-top-right-radius: 22px !important;
-    transform: translateY(calc(100% - 96px)) !important;
-    box-shadow: 0 -2px 32px rgba(0,0,0,0.18) !important;
+    transform: translateY(calc(100% - 96px));
   }
 
   .bottom-sheet.expanded {
-    transform: translateY(0) !important;
+    transform: translateY(0);
   }
 
   /* Sheet header: taller hit area, better layout */
@@ -2880,10 +2686,7 @@ a,
 
   /* Drag pill */
   .sheet-drag-pill {
-    width: 40px;
-    height: 4px;
     border-radius: 2px;
-    background: var(--ios-gray-light);
     margin: 10px auto 0;
     flex-shrink: 0;
   }
@@ -2946,24 +2749,11 @@ a,
 
   /* Member cards */
   .group-member {
-    border-radius: var(--radius-md);
-    border-left: none !important;
-    border: 1px solid var(--border-subtle);
     margin-bottom: 8px;
     padding: 12px 14px !important;
-    background: var(--bg-secondary);
   }
 
   .group-member-head { margin-bottom: 4px; }
-
-  /* Quick message chips */
-  .quick-message {
-    padding: 8px 16px !important;
-    font-size: 13.5px !important;
-    border-radius: 999px !important;
-    background: var(--bg-tertiary) !important;
-    border: 1px solid var(--border-subtle) !important;
-  }
 
   /* Action buttons */
   .action-buttons {
@@ -2971,7 +2761,6 @@ a,
     gap: 10px !important;
   }
 
-  .btn { border-radius: 14px !important; }
   .btn-primary { font-size: 16px !important; padding: 14px !important; }
   .btn-secondary { font-size: 15px !important; padding: 12px !important; }
   .btn-danger.btn-full { font-size: 15px !important; padding: 14px !important; }
@@ -2980,13 +2769,11 @@ a,
   .nav-instruction-container {
     padding: 16px 18px !important;
     gap: 14px !important;
-    border-radius: 18px !important;
   }
 
   .nav-icon-wrapper {
     width: 54px !important;
     height: 54px !important;
-    border-radius: 14px !important;
   }
 
   .nav-direction-arrow {
@@ -3000,14 +2787,64 @@ a,
   /* Stats bar */
   .nav-stats-container {
     padding: 14px 16px !important;
-    border-radius: 18px !important;
     margin-bottom: max(12px, env(safe-area-inset-bottom)) !important;
   }
 
   .nav-stat-value { font-size: 20px !important; }
-  .nav-stat-label { font-size: 9px !important; }
 
   /* Voice toggle inherits flex-item positioning from base rules */
+}
+
+/* In-app confirm dialog (replaces window.confirm) */
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: toastIn 0.2s ease-out;
+}
+
+.confirm-card {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg-secondary);
+  border-radius: 22px;
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.confirm-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.confirm-body {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin: 0 0 var(--space-5);
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.confirm-actions .btn {
+  width: 100%;
+  font-size: 15px;
+  padding: var(--space-3);
 }
 
 /* Journey complete overlay */
@@ -3075,8 +2912,9 @@ a,
 }
 
 /* ---- Navigation: fully hide bottom sheet ----
-   Two classes = higher specificity than any single-class !important rule.
-   This beats `.bottom-sheet { transform: ... !important }` reliably. */
+   Keeps !important on purpose. The drag handler writes an inline transform,
+   and inline beats every author-normal rule regardless of specificity, so this
+   is the only way starting navigation can override a sheet left mid-drag. */
 .bottom-sheet.nav-active {
   transform: translateY(110%) !important;
   pointer-events: none !important;
@@ -3187,7 +3025,10 @@ a,
   --tracking-normal:  0;
   --tracking-wide:    0.04em;
 
-  /* Radii */
+  /* Radii — the one shape scale in the file. Generous corners are what make
+     the phone build read as a native app rather than a web page: Material 3
+     puts a bottom sheet at 28dp and a card at 12dp, and Maps rounds its quick
+     actions into full pills. A colour pass must not restate these. */
   --r-sm:   10px;
   --r-md:   14px;
   --r-lg:   18px;
@@ -3261,29 +3102,6 @@ a,
   text-shadow: 0 1px 6px rgba(15, 23, 42, 0.2) !important;
 }
 
-/* Frosted ring around the mark */
-.hero-icon-ring {
-  width: 76px !important;
-  height: 76px !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 8px 24px rgba(15, 23, 42, 0.22) !important;
-}
-
-.home-hero-mark { width: 38px !important; height: 38px !important; }
-
-.home-hero-pill {
-  font-size: var(--text-xs) !important;
-  font-weight: 600 !important;
-  letter-spacing: var(--tracking-wide) !important;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.13) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  padding: 5px 11px !important;
-}
-
 /* CONTROLS */
 
 .btn {
@@ -3300,38 +3118,9 @@ a,
    visibly shrinks. */
 .btn:active { transform: scale(0.97) !important; }
 
-.btn-primary {
-  background: var(--waysera-primary) !important;
-  box-shadow: var(--elev-2), 0 4px 14px rgba(79, 70, 229, 0.32) !important;
-}
-
-.btn-primary:active {
-  background: var(--waysera-primary-strong) !important;
-  box-shadow: var(--elev-1), 0 2px 6px rgba(79, 70, 229, 0.28) !important;
-}
-
-.btn-secondary {
-  background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-subtle) !important;
-  color: var(--waysera-primary) !important;
-  box-shadow: var(--elev-1) !important;
-}
-
-.btn-danger {
-  background: var(--status-danger) !important;
-  box-shadow: var(--elev-2), 0 4px 14px rgba(255, 59, 48, 0.28) !important;
-}
-
 /* The expanding circle behind every button fired on unrelated presses and
    read as a rendering artefact. Scale feedback alone is cleaner. */
 .btn::after { display: none !important; }
-
-/* Tab switcher */
-.tab-switcher {
-  padding: 4px !important;
-  border-radius: var(--r-md) !important;
-  background: var(--bg-tertiary) !important;
-}
 
 .tab-btn {
   border-radius: var(--r-sm) !important;
@@ -3341,8 +3130,6 @@ a,
     color      var(--dur-fast) var(--ease-standard),
     box-shadow var(--dur-fast) var(--ease-standard) !important;
 }
-
-.tab-btn.tab-active { box-shadow: var(--elev-1) !important; }
 
 /* Inputs */
 .form-control {
@@ -3437,7 +3224,7 @@ a,
   border-top-left-radius: 26px !important;
   border-top-right-radius: 26px !important;
   box-shadow: var(--elev-4) !important;
-  transition: transform var(--dur-medium) var(--ease-emphasised) !important;
+  transition: transform var(--dur-medium) var(--ease-emphasised);
 }
 
 .sheet-drag-pill {
@@ -3453,13 +3240,6 @@ a,
   border: 1px solid var(--border-subtle) !important;
   background: var(--bg-secondary) !important;
   transition: background var(--dur-fast) var(--ease-standard);
-}
-
-.group-status {
-  font-size: var(--text-xs) !important;
-  font-weight: 600 !important;
-  letter-spacing: var(--tracking-wide);
-  padding: 3px 9px !important;
 }
 
 /* Quick messages */
@@ -3610,12 +3390,6 @@ a,
   box-shadow: var(--elev-4) !important;
 }
 
-.nav-icon-wrapper {
-  border-radius: var(--r-md) !important;
-  background: var(--waysera-primary) !important;
-  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4) !important;
-}
-
 .nav-stats-container {
   border-radius: 22px !important;
   background: rgba(9, 11, 20, 0.94) !important;
@@ -3687,38 +3461,9 @@ a,
   margin-bottom: var(--space-3);
 }
 
-.result.success h3 {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  letter-spacing: var(--tracking-tight);
-  margin-bottom: 4px;
-}
-
-.result.success p {
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-3);
-  opacity: 0.9;
-}
-
-.suggestion-icon-wrap {
-  color: var(--text-tertiary);
-}
-
 .suggestion-icon-wrap svg {
   display: block;
 }
-
-/* The create panel doubles as the first-run name step. Success green reads as
-   "finished" on what is actually a form, so that path gets a neutral surface. */
-.result.result-prompt {
-  display: block;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-}
-
-.result.result-prompt h3 { color: var(--text-primary); }
-.result.result-prompt p  { color: var(--text-tertiary); }
 
 /* Monochrome pass.
 
@@ -3763,11 +3508,6 @@ a,
      thing the eye finds. */
   --waysera-primary:        #4F46E5;
   --waysera-primary-strong: #4338CA;
-
-  --r-sm: 8px;
-  --r-md: 10px;
-  --r-lg: 12px;
-  --r-xl: 16px;
 
   --elev-1: 0 1px 2px rgba(9, 9, 11, 0.05);
   --elev-2: 0 1px 3px rgba(9, 9, 11, 0.07), 0 1px 2px rgba(9, 9, 11, 0.04);
@@ -3994,7 +3734,7 @@ a,
 }
 
 .quick-message {
-  border-radius: var(--r-md) !important;
+  border-radius: var(--r-full) !important;
   background: var(--surface) !important;
   border: 1px solid var(--line-strong) !important;
   font-weight: 500 !important;
@@ -4125,58 +3865,6 @@ a,
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
-}
-
-/* In-app confirm dialog (replaces window.confirm) */
-.confirm-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 10050;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-5);
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  animation: toastIn 0.2s ease-out;
-}
-
-.confirm-card {
-  width: 100%;
-  max-width: 340px;
-  background: var(--bg-secondary);
-  border-radius: 22px;
-  padding: var(--space-6) var(--space-5) var(--space-4);
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-}
-
-.confirm-title {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
-  margin: 0 0 var(--space-2);
-}
-
-.confirm-body {
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: var(--text-tertiary);
-  margin: 0 0 var(--space-5);
-}
-
-.confirm-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2);
-}
-
-.confirm-actions .btn {
-  width: 100%;
-  font-size: 15px;
-  padding: var(--space-3);
 }
 
 /* The mark inherits its colour so it inverts with the tile behind it.
